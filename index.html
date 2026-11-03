@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AL FOUAD Client Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap">
+<style>
+ 
+:root{
+  --red:#E30613; --navy:#0F1E2E; --white:#FFFFFF; --light:#F5F5F5; --soft:#D9D9D9; --cool:#6B6B6B; --mint:#DDF3EE;
+  --font:'Montserrat',Arial,Helvetica,sans-serif;
+  --arfont:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);color:var(--navy);background:var(--light);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+ 
+.top{background:var(--white);border-bottom:3px solid var(--red)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.top img{height:52px;width:auto;display:block}
+.top .tag{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);text-align:right}
+.top .tag b{color:var(--red)}
+
+ 
+.progress{background:var(--white);border-bottom:1px solid var(--soft);position:sticky;top:0;z-index:5}
+.progress .wrap{padding-block:12px}
+.steps{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;list-style:none;margin:0;padding:0}
+.steps li{min-width:0}
+.steps button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps .bar{height:4px;border-radius:2px;background:var(--soft);transition:background .2s}
+.steps .lbl{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--cool);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.steps .lbl span{color:var(--red);margin-right:4px}
+.steps li.done .bar{background:var(--navy)}
+.steps li.cur .bar{background:var(--red)}
+.steps li.cur .lbl{color:var(--navy)}
+.steps button:focus-visible .bar{outline:2px solid var(--navy);outline-offset:3px}
+.count{display:none;font-size:12px;font-weight:600;color:var(--cool);margin-top:8px}
+
+ 
+main{padding-block:32px 64px;min-height:calc(100vh - 200px)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+.eyebrow i{font-style:normal;color:var(--cool)}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.05;font-weight:800;margin:0 0 6px;text-wrap:balance}
+h1 .r{color:var(--red)}
+h2{font-size:clamp(22px,3.4vw,30px);line-height:1.15;font-weight:800;margin:0 0 8px;text-wrap:balance}
+.lead{color:var(--cool);max-width:62ch;margin:0 0 24px}
+.rule{width:64px;height:4px;background:var(--red);margin:18px 0 22px}
+
+.card{background:var(--white);border:1px solid var(--soft);border-radius:6px;overflow:hidden}
+.thead{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);background:var(--navy);color:var(--white);font-size:10.5px;font-weight:700;letter-spacing:.18em}
+.thead div{padding:10px 18px}
+.q{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);border-top:1px solid var(--soft)}
+.q:first-of-type{border-top:0}
+.q .ask{background:var(--light);border-right:3px solid var(--red);padding:18px;font-weight:700;font-size:14px;line-height:1.45}
+.q .ans{padding:14px 18px 16px;display:grid;gap:12px}
+.ar{font-family:var(--arfont);direction:rtl;text-align:right;color:var(--cool);font-weight:600;margin:0}
+.h2ar{font-size:clamp(18px,2.6vw,22px);margin:-2px 0 10px;text-align:left;direction:rtl;display:block}
+h2 + .h2ar{text-align:left}
+.lead.ar{font-weight:500;font-size:14.5px;line-height:1.8;margin-top:-14px}
+.ask .ar{font-size:14px;line-height:1.7;margin-top:8px}
+.index li{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.index li .ar{font-size:13px;letter-spacing:0;font-weight:600}
+.att{border-top:1px dashed var(--soft);padding-top:12px}
+.f.att > label{color:var(--red);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.att > label .ar{color:var(--red)}
+.attrow{display:flex;gap:8px;flex-wrap:wrap}
+.attrow input[type=text]{flex:1 1 220px;min-width:0}
+.up{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:700;color:var(--navy);background:var(--white);border:1.5px dashed var(--navy);border-radius:4px;padding:8px 14px;white-space:nowrap}
+.up:hover{background:var(--light)}
+.up:focus-within{outline:2px solid var(--red);outline-offset:2px}
+.up input{position:absolute;width:1px;height:1px;opacity:0}
+.files{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.files li{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;background:var(--light);border-radius:4px;padding:6px 10px;min-width:0}
+.files li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.files button{all:unset;cursor:pointer;font-size:12px;font-weight:700;color:var(--red)}
+.files button:focus-visible{outline:2px solid var(--navy)}
+.ferr{font-size:12px;font-weight:600;color:var(--red);margin:6px 0 0}
+.fhint{font-size:11.5px;color:var(--cool);margin:6px 0 0}
+.f label.bil{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
+.f label.bil .ar{font-weight:600;font-size:12.5px}
+.f label{display:block;font-size:11.5px;font-weight:700;color:var(--cool);margin-bottom:4px}
+.f textarea,.f input{width:100%;font:inherit;font-size:14.5px;color:var(--navy);background:var(--mint);border:1.5px solid transparent;border-radius:4px;padding:9px 11px;resize:none;min-height:42px;line-height:1.4;transition:border-color .15s,background .15s}
+.f textarea{unicode-bidi:plaintext}
+.f textarea:focus,.f input:focus{outline:none;border-color:var(--navy);background:var(--white)}
+.f textarea::placeholder,.f input::placeholder{color:#8a9a97}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips label{margin:0;cursor:pointer;font-size:13px;font-weight:600;color:var(--navy);background:var(--white);border:1.5px solid var(--soft);border-radius:999px;padding:8px 16px}
+.chips input:checked+label{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.chips input:focus-visible+label{outline:2px solid var(--red);outline-offset:2px}
+
+.index{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:0 32px;margin:0 0 28px;padding:0;list-style:none;max-width:720px}
+.index li{border-bottom:1px solid var(--soft);padding:12px 0;font-size:12.5px;font-weight:700;letter-spacing:.06em}
+.index li span{color:var(--red);margin-right:12px}
+.how{background:var(--mint);border-left:4px solid var(--red);padding:16px 20px;max-width:720px;margin-bottom:28px}
+.how p{margin:4px 0 0;font-size:14px}
+.how .eyebrow{margin:0}
+
+ 
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:24px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:14px;letter-spacing:.04em;border-radius:4px;padding:13px 26px;cursor:pointer;border:1.5px solid var(--navy);background:var(--white);color:var(--navy)}
+.btn.primary{background:var(--red);border-color:var(--red);color:var(--white)}
+.btn.primary:hover{background:#c40511}
+.btn:hover{filter:brightness(.97)}
+.btn:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+.saved{font-size:12px;color:var(--cool)}
+.note{font-size:12.5px;color:var(--cool);margin-top:18px}
+footer{border-top:1px solid var(--soft);background:var(--white)}
+footer .wrap{padding-block:14px;display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;letter-spacing:.18em;color:var(--cool)}
+
+@media (max-width:720px){
+  .top img{height:40px}
+  .thead{display:none}
+  .q{grid-template-columns:1fr}
+  .q .ask{border-right:0;border-left:3px solid var(--red);padding:14px 16px}
+  .q .ans{padding:14px 16px 18px}
+  .steps{gap:4px}
+  .steps .lbl{display:none}
+  .count{display:block}
+  .index{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}
+  .nav .btn{flex:1}
+}
+.err{background:#FDECEE;border-left:4px solid var(--red);padding:12px 16px;font-size:13.5px;font-weight:600;margin-top:18px}
+.f.missing textarea{border-color:var(--red);background:#FDECEE}
+.req{color:var(--red)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.thanks{background:var(--white);border:1px solid var(--soft);border-top:4px solid var(--red);border-radius:6px;padding:32px;max-width:720px}
+.thanks .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn[disabled]{opacity:.6;cursor:wait}
+#printdoc{display:none}
+@media print{
+  @page{size:A4;margin:14mm 14mm 16mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;font-size:10pt}
+  .top,.progress,main,footer{display:none!important}
+  #printdoc{display:block}
+  .pd-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid var(--red);padding-bottom:8px;margin-bottom:14px}
+  .pd-head img{height:46px}
+  .pd-head .tag{font-size:8pt;font-weight:700;letter-spacing:.18em}
+  .pd-head .tag b{color:var(--red)}
+  .pd-meta{font-size:8.5pt;color:var(--cool);margin:0 0 10px}
+  .pd-sec{margin-top:16px}
+  .pd-sec .eyebrow{font-size:7.5pt;margin-bottom:2px}
+  .pd-sec h3{font-size:15pt;font-weight:800;margin:0 0 8px;break-after:avoid}
+  .pd-row{display:grid;grid-template-columns:36% 1fr;border-top:1px solid var(--soft);break-inside:avoid}
+  .pd-row .ask{background:var(--light);border-right:2.5px solid var(--red);padding:7px 10px;font-weight:700;font-size:8.8pt;line-height:1.35}
+  .pd-row .ans{padding:6px 10px;display:grid;gap:5px}
+  .pd-f .l{font-size:7.3pt;font-weight:700;color:var(--cool)}
+  .pd-f .v{font-size:9.3pt;white-space:pre-wrap;unicode-bidi:plaintext}
+  .pd-f .v.empty{color:#aaa}
+  .pd-row .ask .ar{font-size:8.6pt;margin-top:3px;line-height:1.5}
+  .pd-sec .h2ar{font-size:11pt;margin:-4px 0 6px}
+  .pd-close{font-size:8pt;color:var(--cool);margin-top:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAC/BAMAAAAhh1vFAAAAMFBMVEX////&#43;///&#43;/f38&#43;/vJv8DwKTHrHCSjNDkNEBUFDRMEDRIEDBQEDBMEDBIECxEDDRLfW8tOAAApFElEQVR42u19e3Qb13nn785AsmSLxAxIUY8KwBCQY0cmwCEBO5s6EkkRkd0mjSVbsus8akmJ3e5uEqet42xfSXpOT1vH3sabns3DSWM52bh1LFtqHo1lgSIkum4dE&#43;SQUKzGEsEhqYaKSWKGgGzZImbu/jF3BoMXRUmJ3JyT&#43;YfAcObON9/9nr/vuxcEl32EYaicjCH86hycxD7w0gUuDHWCC4dCv4Bnkstl8xjXKQoA1frQObTohexD59DbTTRnxsVWAADVtL5Qtu6FoSzfIwJUzw1xAfVtJZoz4yHB/kKz9akOZeOtonXV&#43;KwiqW8n0VJziWaAavvrzD1nvrfV&#43;ZKbTV0m1fxl0Xz6NwU3A1ZKRyS9Js03vrP0baVPHKFvG9Fc/g6h/MxKcbQWOe0bOstmV2wQzrxdRAfj6yqFTVyFalbzr928ouKyQ/RtIpovdK6oUhGxWkC4QPXLrbosVl8G0e03rKuh2NJLlUwkha1Vl4nP0beFaO61akYDWGmsPVPJaKH63WqJ0dIffcl3BjqFmjY0nKk0MbX8&#43;8apt4XTTZtW1Dy/soKJwbZaL3dZrL5korn8u22fok/rZIXLXZVJNTfTU3I&#43;03jLufDn2iUT7blk6XhHyXsD/NaSx/NFdZfDC6y2P2m5PsBx&#43;z71yosHl2dqSE/2861ibkIUHVavcDGR87Yx3uZO/VvY533lP3zCZcvHJSsiJzCaj0lGNstFjqi2sMCnulTvNLtubP&#43;oNDamcv4jjNamyStuPQJMUnPHAioAU4kcYULwrI4trus6nAjQVAGYk20sEvRdeZPHWww0&#43;&#43;zgWNkwbrmNok7CLiYKFVGrOTpo3UG2SFeYaH7CIvpUSZ&#43;m&#43;nUAIN39tugA4KZEAFq2T3YibZNnc&#43;LjrrAi0tg6ADAP5kqnAtcIFqsXRI&#43;tZIR7N0B/1icrrnujCwIArEjRK8tp2bIVuYDr3JTFQe5aAQ6nzQ6AZvskxX1zxrqQBK&#43;weGSYqLrPGW2WqIgCmm2hlkQg2xcqt8lGmyVIAfmKEs0Ri&#43;hRtQYHAZcFFpBzyTM7Ri2dFfQrSrRp&#43;b9TgXIObrDfQQzYegh6qlw2AADDOoDSfFwZoqVWAKD5ClfM2awmgmR/ODla7a/NNu2ysupLI5p5uUoWZh1WO5qYO2bWuH/UEurIlSSas/RwNlD5j8kjAOi468xsTQ9Chsvm48pw2tLDaj0yN6gAZrL2f0xak9Ewgnr5hFwRk6cDoMeqpXXyCEBCs0M21YZZOwJt0ACgafQKEm0SAQCtpUcbxgHf6g1ORF1HACyhFq6kTEsyAGhGjdeZOjIO0t88JbGB64X6yhW3HoIIAEYtLhr&#43;I&#43;P6e7jNqnmB4OVyiL6kgGlFkwDgP1ELcNGDQ1ev&#43;PlvrPOtWQyOoSS0AsDcpfnES8sRBQBUV2r&#43;T5UHOdIazp1adAS/Nc6lwaeXIh6c9aR6qq&#43;EAxEtd0pZfBDNsZxXiNO8/dTaxxg47p7MhUz9ZYA1l&#43;7GhUUea26YbF98BFW70kSTkgGoc0z2N15gDAUABOGKEX1hmmFuSC3pufoVI9oiV1/UEk8uLRZSr6BML8HTX4AcQq&#43;4Il7&#43;QS/n6W8X0YRcht3z/MLJ4WXQIfsTAEOpz2l6pYkWuNqa6E87wVP6gpJ/pYmuM7Xc6c/AeDYLgOP&#43;GABeztbSycCyy5hMzyWTW8fESi2d88YEAEQDnXm6&#43;9ufCC6SG1&#43;5gMmSRLH2Pxu3qnQ&#43;IgHQz7eb9PHZOoOIl5EkXpDosFyP6mjN8QrCg/cRQQAwmXwyxEveD/sXSTV/KR6Rk8dGpWr10esCAGTCiyS26gDMDQ/NYfLMsZoSMCVcBqmLEx2KKokt1eCVUX9qg3EUOWHvFABM&#43;SF79NoTYqXGF0NzOCCVKSLXUUd4h/hb927&#43;Lb2SV9bdNYsmjS3LAVpg7KzPFXKx8VJ4jDfKiI7WM6jx5h30X&#43;54vFoWBQBcLaNXeM/5vxM6jkasF93&#43;RB1TzAp6qr50muM7zxxUXURnErHa7BAFPVY8P1ETqwHZrFaJKz9xz4H&#43;PfxyVgUiN/14kTQCNH8RNN8prZp0cTp0554UROzCwr57F/YJr&#43;8G8LQlH2oTPIXNVSmslXY0VasYXUZp/x65L8rCafn52q7&#43;9LaL0sHwWHzX/fscf&#43;YB&#43;MlPP61Dw0MAHgJyeMjhdFMvgMad91cGy1wPAIjVRflo4J/n/FBuemHUrbLVrt6SDm2Jbpwfi&#43;8Svi3PuGTav/YbvYvd0jEsz9U0W1wN&#43;Wifn/WqhUgrcSVV1TdO3QQAmFuaQ&#43;SN&#43;J1eXjbKTZ5v0SyUn99cYd1Mv6VAG9UKU82f9TcrRgo4y6K4uZp2Mdp5MVaa82&#43;828vLlRbbs3hc2/1AJR7gtYjmtlZavanGq/OAxLPKJpmqZR5Cx1n/4bElMTp6&#43;r6Pl9EMDpgafmvf4rf9QK7gqM4AgKZouRkOduh0ZHS8Abps8VKuRXO2R2DY2JIYffxB77fkSt9IN0w0jCwqH6RSPiaHWdSzsZzqxm3zp4I4NQyhqa4147I3sjaLnH8pNAcSn&#43;Pa1crQ1DQefmiD&#43;1zaMmlE8HQzjm78&#43;wqhlnTrNXwbdS7ripau8f08y/f2FORrPl&#43;PCDNu&#43;9/ckkR6ze1PdmvV8fSk&#43;Y93FkoTkL7pZOu45T0Oe2QA2H1AMtSKZJtd74vvL5kAMiH5Gv4WYgF0oB4NgWa7Gdk8thSLF23Reuc5qSp0MvnBv3AZ1JZDY33Zp5/NZnMHiZUxjbzhr5QPp6fUt7NkQoJxPXTuM5&#43;hOogYKX9OWLITG6c7VQssidNtdTIXgy/mFcY64/iJ/jQAHALf0bRt&#43;7GPKOAXeiviDzOq28/29faXoiWSFF99gTSAz/sq3IMtHAn7Pjq2JJr14R3KbqVWumXIOUeTzz2CkAgANDeIsZnr9smg7cOV8cfoMicyDBn2PBdupu/9bhY4eq2fRg&#43;65zPiKeoqgMBqZwK00SX5w8nT21bZprciRyxFbK/MxjSmWlxITD/yp3&#43;WAch8V0V6ag612iwjG3XL8/ETkv7kfgW4NQi&#43;yTIr4jQALnr8C5MplysEgNmosiSoKvDlOw9KNRNb00mO9WOGbQ7MLMINf32NEANPopVFef&#43;4w2oufIAZme37kvkQkOwptK2YsOJujo/ByGzbMAkAgdWObixNDQFMml/4Tr0cxoZmrykba2y07dluBeiu6licHCo5O98WGQAXuXYfHTCz2WybDnJWljEGoDGdTmfe&#43;2hW0QFuymmEo6eiS0UFw8GfKReAEG58sszzmhn//bsB8JWpkSmVWE02fhOAefxuWrRwUKWJJ5u/FFgBtBsJIN7av2rAKGM0PbZkoGac1M0WGanG&#43;cp8kE9O9oHnqtqk3Kzmtkjg&#43;Ace3OPZLAHc8W4B8nVbTu9dDs/WXfft&#43;ktwWjsAX6nj8FRgqTTD9NcFa&#43;pmuGPyM3szH&#43;mT9SpWDzsNmdh4DFJL6xe8&#43;Y/dA0TXeWeTIL2Nn3wIgg4Nj/7ht/tMgBuNX7REu4/URSBMo6a456Bwripem0SHUGK1CkCA9457rDwNhC7gCdGqzJBv0gHD1ekJnFqa6bhoWMxZjmKGkz1dY9Uxpikd2ONm9WQXgPdTQPdkAWDw6FvMYZGOV4NZt70zBwz8UoiOjtpBxZj8rCd4qPoKVSp5cG6LrthpmqoOWh8OsZs8f9XXCEgFxxnO&#43;tVfCtFSJupUNzNGA02ZgLVSq1SZmDy917m&#43;6RjXAVjQdFgAACNjB2HG/iETaNzoKP33TAAIAcheIC5VL4ZoXr21CzZKY4STkFQg7B3KApzjMs1AidU&#43;echBT8acGNeOOCQVXOajjkUKWIMB4NvrLuXiOuiQGhZq5KeVRPNDvABwrQ1r9tISSjMW9g6BiyrgZVEz0oixkVysJgGzrm6ZoSxjrCUdWRWcPISwKGjpIb6OqISNNPiIUmv1XRWntcj3wt7cmOeD4&#43;3NpShpDOCiSiImQtCRGO7jLXl3s7r5&#43;/WnOQsg4Bjp3Ci46FAiJkLUdvYlp&#43;rBYLd0CLirbzZT1Z/FWifWXn&#43;VZOMwYyemC7271t684szr1OU/ose39a5b9Zvr81f9yVXS6yetLqS8WoIBiysWA7mcLnHQ41flo5lbEuuuuXl9aH7Tf5tbP10TnvnE36srV668QTJe3nbVWgD0jX&#43;idTh90w2eWyBywQJ4EnUlRNHjD4S6DgppAI/tWS4gUynVRFrc9DqtvrlRUz7&#43;6ZBXN9MA9NU7P1sNf3Bj77pd/CYBoK&#43;&#43;5cLiYTwuii3bn5&#43;SQd2pIZ95sGN8wAJ1zANqy13IZwFgqiTVizc0ltYQjAX4zKdjWS5hzWN69R9&#43;sdreeu4I6rH5Vmj6KV&#43;ieCHxwPpp&#43;ka6IANYs&#43;lfNMf2vOs9b9y8Nv3KeH4tiC/0n&#43;vXpqUzAEhkwXGLxmLy0RSy1wYcnc/d8ptvbZLefJM9TzxdeWP45CeCTTwlxouvSeunbw6tRZl41Ag5YvFYTAYA/pjftrTS9Le0DqQlUdisAEBce8fHMhIAs9QVS6TFYAjWJQ46Fgi861u6t3RxLN9bQQVnJKT5IKWnRtDQh5ii1OP0MjpfhVVNt7xksZqb//SJnsKytS9O6/Pe17vOAOvH1s/kNQA0wNv3rVykizu4ca3D6Pwnhv/4KvJmSXLO/2P5ja0/e0G7KSecW/bef38jOH7&#43;ndat9JXn6BICpi1JZvSk1YE4vMqZ/Qpu2dpi4e3pu/6npJbZaiLVL&#43;PbIAAdixZWB65DPq2JlFiw&#43;FV8OZjMNX54X4c0ZwhDX9ZJ8&#43;/ngnXj6VqQIPG0SwDAiVsLgFFMjsY6Dx252QLR5PynOAAw21THv9TFFflJ9i8tozRsPZ3GoOy7b6&#43;Hucx7esvwKHJiU3vBwMiRp/rSg899rbhIyahkP9JpNhhZvkUAAHK8XdahzA4E0kPhQ5&#43;0IjTee&#43;2EBACjjlQ31VXEYIcdKkW440EBfaT/1ff&#43;9skWKx6gzWXJfuSWqW6kDfNQpjMU7jw8r9R1LqYNvxp4rVVb0x8C8NZpPEUBtLc3vXMFZtRz/wFo4eGb82sBYP1PN505A4D4balecZTWFWnLdmjPTXPkaW71f8w8/2Q2&#43;2/aX/4cAH3tTN61qJKf6ecKjdzIzBP&#43;E5o23T5z3Xrr1X72HK0rHsG5tHaTmFYAyE0WbtklAMY1x3QAGGvrZ8HwBzZmAMCcdHq9I3WRT4aTzgYAfp&#43;hzOw/FovFIskvMi52u&#43;YoGP/nEIVhJCMqAGSSwgXFwxj60D/9r6ffm90eAUD4zTIgxaVugN42YglvJull2IxnswwA5gb2SCLI9aoJTDoGVABU&#43;cD&#43;TCCdTo&#43;2paz3lz/mCkAae5anBaA4YL2Q0TahXIho5ad9ipROPvx7qTTA0d480NgyD4DYvaVG24g1CiHMwE7abd5NdTx5lBXST0UA6p837874VcvIs4qBK9jij98f6dShaO1VuWE9og060CmpoXDk0JGdCiDvmABXeA&#43;nA9w&#43;m7SCLR/tIsO17cRc5OtIh8SyLAUwi4efGmDhKN1gaRkhEReKeRQ6QPrs1DefMy4AIQDakIrs2Gjs0IeKAAYoyMRtXTow5IDEdjblmETTP76oUEutJUYDk8ljETv9bLBK&#43;ny&#43;1KHX6CsAMMy8TdHEMK1HtP2BWtbHTIeT8ymgJyrReEovmxOjTbVmjOcsk4gpaw1IPaFmK0zMY4qVKJdScU6xBhBKmljoAgAaHHEclZ9cQDxKLzXWdmCVwr8oCFGRr&#43;hk5YbtQKLZyiMNWxVrWmqOtRzYAM2YwvDNWIywznGOn3SClE/JADDmyAsdLygXdC5OOvvyf64aPK/rqMJpRvqZl/I2MSawdVu16qFAqxVKm2XFrHAskE2n04OWJWoTHW7yjwMA2a5WcXL3EsAaQ/qbv/YuZChf3RFqTxghrHJvtFogO2nPVYcfDd0W5OhKrbmONPi4APDzTDvsKfavJQCgPE9L&#43;IomLhX3ACYD3&#43;19yT85YQmqC8cyirpVOAgPOVCGBUeSxurqD5e5oxJy5KLpeFPPsu3AqoI1jYK9mlhoqbJAQmWLhacS6nXrz5Q6yJk8m53Yv7uGSd3BTI2csiGQDhtpqi4cClaJRS3BGZlbtrbsVpIAPsrweKfccUO1Wvxk85JlGjDCoagTnhiuhmldY7bNZ7sTO9Yj1ebDSsPdJZbo6U/fKbz2mPJR3GfzVYgyWvUa7ckL9XLEmgGau5bjyswxNT1sAaAmsVsKM2SvJR9yhaqzNglaKrGEjv9psLj8QUNRYmm79ZBnfTrcVI0yLhWWLtPsDqstFKSJVmuifM3nHLW1VHFjZR&#43;O/1orY3Gkg1O3/UYuIf&#43;DjLQGNFtTE3mzdYyZ&#43;mpOk4tJAixm2v8iUZfptIPcEls5yyuSzRWFyimrVFYC7QI3/j6RYRhIi6IoMjmjrOOF4DaLG61LASDrxu8SS&#43;741wUXysu4brdYAVAnWgUApKlcFaPLLDXMGM5b/I&#43;Tt&#43;tQYmlpqA&#43;8jl4AIK3MeCLFWzwklUE/dzGguv067l5GQedRpwhTvhUCb9k7zEbsOZFaGuM6DBjy4f0KoO9hGKJtPrpOA4BWuCzxcLpnhK2u2VBEJoFVRRiy0QXacP6tAgDQSUeOGre&#43;rgGAcvjPM7FY7CUWLWt2tcsKoYhI61sP7oLi4Vwhh1zcZe3xbpNix3rilpIdDZxma7XVUrj8yfuhAwZNxvzpdLqTRbeCvc5vxHLsuqsyRfSLsNOMPBaTUr407XqtXg2H1VEb1ZWnbhcYQlMKl78HUQBQHEirAHK5jzDNY0LQTaxg1TX3N160eJSoJ&#43;0uw6DWqp1ZrOY2ZnkJQEjKWMIBrbQ6uNG3DADICMtMpoatcq/Ml4kHhBKsoC8IF8tpGIIdNDZWv5lRq7To22moXAjZKbZVCZ0tlWfz3ezDHHM2BvOhOyISAEq/b715&#43;54Jx9z4LlqmKebtyXBhKnotvTb9zzLvvrPXzPLx25mx1QZKUf&#43;k98MpANRer0bxAwUAMt9hXsVkYzqNU6S1Qb5o8aC2I5FbJ1BxOdHLUiGV7ZcBX2jXrts7WURJT0Vc1kuwti9pMnWGcLPJmrViyQhjh6txamr3kktyDvtkzX6zs1XRcmX6NjXFthsjrhA4lzHKHIUBwHDArkY2kcJbFrnD7E55gaHjwZblFy0egGILtZ0SAmDJoD5X3kxgRKqLVeZYuaXhYwD4eWduf2LRIPuYKtqvy1AVNPbsw0UrYt5ZAWynhIDAWeWL5kqgY/TUeKV0nSrfWID1EWmlJ4tui6rbT&#43;O5xGgngPBxaTfKsxDO/uPwsAoanxi0ZaC7udX&#43;b7sOAMZCvmKGTL6vgurKjQWoHUA7FFhQIBHbJQBTjsR1bdwyFIvFxhItBytybka0uZC3jXGVAaZBWxPnud&#43;x3o0riJbTWDVSebkROFJGde6Z2k0ScnPG1hnDwj7mGwVwoIZtkc7Of7U3nU7Ht&#43;q/w9RcKiM6nPF6HaC1s1ImG15g7ORM1nVKJrwyAIyMVy9iUf1uqnP7K0pXjk42Ww8KH7/GPpPIhKIwN9jQHZWP3vtA4pY7gyzWIo5H5q2i3U1fkywl5qaDT3ZW1PVmxu9h5n3NC3nfNID2QMd6ADjxPK1eaK0HRwRybqUVRf&#43;QK&#43;9e5MjX886DYuvXr3tlW7e11w1u/fnJEzMUoQKDdsGtmfTd8M61BRYbL3t9xjftEM3l4neOrWYtNWvy516s2KePBDdaiDS4c&#43;3/N7ZSDI1&#43;/Jq1AIr00elasWz7iytAVgDI/TCUq0xCmthYa/Ln/nV6ejqR4N9tlV82vCiRa9//5ujErevtN2w5sVLz2J6FO736OxZlPIDgdTu9st0GxM1cf13FZofUe9Z&#43;&#43;cbpdzyjadO3dHQCQGpGq0U0zoR/MrFpBUBP&#43;16pVJB2Pyu/cDPXX3916M4bPsWxktH0msKmd9Kn0H7t/FqbmND60FoYHLNdb260KOMBrmnvx0&#43;scYZd/eqmsavKWV0Yv9lm9eqrpZVNka0Wo7Vva7XNuxbOvxuAduhnVf&#43;6euZdjAGrZ8KdG1t3L58efI0NPh2fXv6ceZUjH0wLRtfZrA7NwIYV&#43;ZXf3l3y7nxwckulRWjrLzIlIK9f/51dH5WCAIyjM5l61SwrCirWAFEnBim7iZc13dSWw&#43;iIsqfH0jKAqWT5wonjDfbXbRMWIM4BAZFvda903OitWnaTSc7PMtSwzVjzQK4gAsgEnqlTrgiFhFYAdLLGPBhtk041LB6Lx9I/Vo78q&#43;3yYuimMNr63S60WPy6Da7MdYkTjskLdCs1gVPXk54lc7YT/vE34jKA9Kqvj9YB/rPZ4wKA3FCticj3bVBcT0pPmIcOrXIihgMSkEkqfS7hmEmp1W58EipfkclW&#43;YPRlw4IqxRX7GCkxcFUnd46KZHoAQCdlasr7PjsyHtKLzsob35qIDnBiDRIXyNgtD3bbFOdHmnYb6&#43;7MAZH9CCL8sjg3sfcxpQI/1gVp5rh5yha0vZ6AmOY97z6iFyb0fzpG61owudDjW4bkz4s3v9oLwAYytlVRw4N&#43;IVnPzqmxxr7KVk4ZgLIGOLeQRID0pCHvpahdwJAWvMRmjQZ0Yb07BMH3fDAyRqdfmOdh9B77fav6SJA9TV7Hv/pI6E6wuFfLTqBkFljIa4afQYPnv8ioWi&#43;j/518lhA5Q1xb5PR3/K&#43;7B9EFQBG6DB2tBgK7nvsyKEBv6AjrTVD/MAjwxZlBABHespGndVryCInD8WbbvmQ9Xa3PZ7sC9dr2g7HShOVG6rRDsYb8cSeFADk&#43;pJ8RAFCE4me&#43;3D&#43;8UOsX4&#43;LZhI99xI8NpscjSqdLTuAZa/NDvfBmlyCENBYzjO&#43;9qpYMY24EINIdWO4D7G620ZM7XEp9TdrjUXG&#43;B5ehqHMKmFryUyjwveA9nFO0aFR4XsALc2368DkA9RQZhXELMQie7nbk9c4trmCW3pY/cU/AES6VvgFD1lWa9B&#43;CTSf9LCtfn5Zxy9lcA4Ev2IHfds2cLhMTv8KHh5Q7VePaLXpV45mBb8&#43;fn38&#43;vj18evjv/TxtoZLXKtAc0sJuCtWxDhElzbLsJaDcB3Ovk&#43;8bJ9k1zlfwkLFXexMujQktUsDvOz6Yl1rqKWFLux55fujWIOGGxTY62LqHYv&#43;rFPdAIvrvFg&#43;d4JPJBIyLnQjD8QTiZhruT/jNEcS1ilDwWzGYDs/DfYB7ONLrEQuXSfDOJIrfWGYgjKryIp9xvg7E&#43;WfAcR7geIXS8l5KJuIP4jzjyf7ZMV5yKS14ZR9vKSq4ALNCeG&#43;AzP0cMpuGXGqW986mEgCZPXD&#43;FtBVa2Ed1W/CcBcvndqKyu9cvy3DgLFFAMbOu/c9P&#43;K8VXLWheWPdSUAiBwIQg6jeoqwPV6SWLDY4wtnS0hCDMlFeKztz5x8KTi8e1CCgDh31HEyn0EGykxgZCphszJ9rd0IHD6vws4SXuUL//BMVQQ/ThJAshpj3F/ZHxWUgGttKXdAdFp1Jzo11x77NLnX9KR9OrAmj8SDF0BqO5VhXkBADdhanjaa6fXZrsGjZYgt8iaPcPIb82q3L2GrgBgW47MiVQjQhbIAv0KwE09uP2gwAcVevQunWEbDtHLGjs0AKR7uP/aT6YACM3zNlAbbj5pU3ljBy82vGwzjPNJxD/pnQfIgfzO&#43;wFwnT4h9AUAIET0dGPD19mVmQ8LsjG8xW7E4I9/UG/qHT8S7jRTic8BgNCc&#43;xmA1juLo765QrfRn0gPAZBaggPdShpiyEjdcaCCaErQ2A&#43;IqtysWotyqGQTbTbYVMriMZ9geFwYpXEAAMSYII13ZVUsUxv7NUE&#43;CIAXwhqcKSKrZJB5B9eIrA00IcnF0rzc/ZPNugIQC/mkaRhPAS/ZJsjsOdtd1MPzubzcNTxSbQ2IKIpoUNBxtl1C5d70jHxZA3iyhSkg8bTyoiiKItLwnIsKwAJ4mb&#43;vaRKgHXm9VOALxvcAEG3B4o73nM0b5AN93ZvBL/TmUdY6ItqHDP70PQF1xHtqpmczPG&#43;wcqirzGyMZwHiC4IXt6Smyh2PaU/yRxoA6HYLIYVRzAIAuXdc/ODrX7JAL5xvJUBANF0T0uj7Fz/gPc/GlFokX058&#43;cP6ka1NctmmBTpQQogVnS47KhpdH8&#43;R/m8NyKu2frOSaLzndwHE7yrEhKZRAvAO0U7fJCHXdBqK3HzeWRSqqw8BAK/cIYyDADCVD2aGCwCE5XyrXmoLkVV/OiZp1H6HQjj76n4FIDvg4TbrGUge1lybnn3IBRuv7S6k/yAF4J4dkF&#43;eLCeaB4QYoA027zCw5/NArf2I6LUEPNB2zn6fIvN7c8k9IDwFKCcrPCEUgDwPQJphU3SPhBh4YmkiV&#43;iCQb&#43;R6dTFwz2KrMkpYCLs&#43;K9YySMKqwciwWOdOsT&#43;7WnKJt8hegGAYgDh5Ha0H6zjnKLreIPOKRFPMMtck45hEwAnTxQ2k6gOeM4PeyJCVJ/MfFCAvf8GCFmJtNYa1i1NJBNeAcUB/xAgH9jdt&#43;PqL5WJ4rALHy7qoGQI4Ft3Ddmtn1wJt7GgBFUiYP1rNeoYsk6HU&#43;DtX4CgHmE3e5AGXQZAipTmMvOCACK1z2YVVrylG0kDkpqticE4kY/n2lUAmWEiHHhUAoIoOnNediyfj3QChvn1tL30wGU9LPGj42dZih6s6gXhMs0CMfoNi76aqT2VYOjQZRCYhj5id7NE38Fv9mp5pctq7m5s4XXziAkA1J97&#43;p/&#43;dxZO/06lVArI9w7xncg&#43;/fTTTxnl4kHsthLJKAGeVsi1rHTN&#43;wtpbQPl//AhSxNJ0Xl3H4BRUwYBhn3Nb&#43;ngdUqhr2IXyAVo6W0&#43;qdmaPqLNRSztNk89pXCdQ4B&#43;x7g9lh3p0SHoKwyzy3zgkaGwN&#43;2wuMRNhjSRCa9ctOimbI/PFTagQz2pmD6nzqfP7/i8LR77rCeMfCZcpASA2iZBMLnJwFqRjAHSrO0P0QAlnJm3NFFuFoZtuzwamxty0/Kxv3LthDc1ve/sgGfT3yT7ENPsJeseNyorUSIYKwDSbc2TJ1F&#43;TeB6HsKP2vQm2JoIUOsJt&#43;ogBgBiKhvGI3iZCGKBd0INQho&#43;8g&#43;vQTNgaeLoPUapNzlQsVvfAnssQPtNGMILsvGC795Ess/Z5a9ENL99YQwA/yCPkZ9TAhISo6sBgFBbNYQO3QjmOSXMHw00KgBIEa0JAIi9q2tc0fwqgD3fHFfaeQB6eg5QBQCgy3an83Ox4d1oPj8KcATGsOO7bFOeslXDtwtcYNKU1IV&#43;GPL/EcB3DeZ993Yk89lKog0gASC&#43;u4DCXDQDmhXHmRFhascVBIGeGvEv9wK2Tyz4dr2jGwuPL2iG3icAoMMwvIREIAulvemj65bzjT&#43;EQfS2qyxa&#43;bbBSh9gTwvfdRCYAzSyAKDwd19SZMSN4flrhT&#43;XqsTjlRu&#43;q4mH9QHZIMx&#43;FCwrb/9YDJkQ5LROp6ZNkFJ0ildfhUb4uVeucbaSIBwRBu6G8KOr7YYued8mOpkN5dWIhwIgQo1dJ1pPsxHPMvFQ3gQwHlClvl7wcUNZ/cdfRFXsMToRLGrzvaArBwwepFV35YjWBwoyG5gyiBodJEwRmfsyFO8TEcXa5IxO6TrIbnUcTBG5zEcMWpxAY//t/I4tqgpsf7WyZR5EGnDSIBYiLAAwuYcfDA6SGPjY4I2sy7ks5wuiEO&#43;FcfRUOwA6YldM7L5NfwcBRgUaVHV47FKbkexTAIC&#43;bLU5rgaMOUDGgdJWq6T1/fKIJoW4XAP2Wfu78YvmoVwIACQBALJtXxjv8QymBcQn7uCqAibrDTWx8SnWDmOvyLL1cE3BiH41L3n7ez0k0KgApAg&#43;BlORjcP91s9UEX2dAUX0nedFSpUgJgCATqViZG4MuEoD1zQK4Bmsqk92WsccAGhW3DIaeHgwHtr9xV50DU5UEc3LGQMIbfldxTJG6ZnPSQDMtduZiHc30OEhALc2sOiUeozxYfgEoGmO/YStCQBC9K0OEAPUCpgC1wNaJgYQEdF3fx6ghYZS96KNDdjWIz3zFxWcjyT7EzlRkYnH6sF3Ez02DgDZL1s/D4fgLMwsAPsnLviJ9WGj428BkCaITnT6EOK7FJnf&#43;Tk77hM4zUslsZBxyBJIAb0UAHaM4gXmE50UdMzaecOxHhzC9scsuA6ay3KxuUN9iR2wF765FXHhaQtnYd0FGs&#43;25LBbPXkNvPmZp3fhGQntdp6oxTDoeaIQVZ213wIZ1iUeukhla1smrvBBAbjl5K6FfaPgyRZdkV5rkIJMq/gHLKRCKnXRj5eiPDMNXlLTXCx9&#43;EbeTtbcnN7&#43;YVj7l5RiKBMA2CYG/rUEoI/hMfAAEswntg6b/ODBJnne2uiNetANg0LsFWbnHH94zxTwYzwGAJiXUxCUJnvlAtf6mfOPJPUp6M01okqO65XF5wTFTHORw3ts91AWyYUpYDpOtXJDREGcZx0qAPgXA40KSFHvBgw5lUC7QiTVNkdik96NPsVOAqY0F&#43;7mfWsU8AjQrQ1bydR3ySbhswTzO2u0NRD&#43;dojd&#43;wCYGc9fosqNQ4daZ6OhVAwA8nc3MZiGCL36gpyy7DSAzInt4Of9OgAiIAU6UYhk5CBAoQLwr53nbdvLy/LLBKMrDEF4qwAAwRYiW3sopGo92tAIPLzlxboz1dhcZTtu0BXSAuAnfQJ8oij6REFM4T7XryLRDbpChETGDmP9GnjZcOyDIA4AWLYrkUgkCOChIIMU7RvHZYBr3MoTzNXfHW1PTG5SJQByx8FqTpPK2rtWgQjzBpQzFjv4LxXOtxKAFhkucnQr5GFno0hBaQKololY4lG4WzCG9&#43;NJALiJflTdoo9K&#43;VRH/pNfisE4/id3DIk/AuBVnZTLQU6pIu1r7mzaPNA5L6Q/W8DqH1WKx2JbWFPAv1bE3GzSIvoHXpYnWtzMnPg9Wz70dd3W3BBb1viJ3VPFYpLlTiHocspsSN2ObnNLCvyf6aANAwYP3YaATLhi1YZUAvQrdw8B7/pQwThvOVlXEqDXJVmwJrkgzz7PIg2dZt4INLrkY&#43;KsLPU&#43;DpxfAKCvMICMTlncyXunjmtMD3NG2tM0ikKuSAvcV7&#43;hxG/wpcZmglkAElPE&#43;PMJZ9z&#43;/IpVRvjYXc3gtw7I1Gs16i8iHq3jZeKh/xaM9q9YtrVTuQ0zcgrEUkSYDak7IOdszGVyeg9gUgkQpBn4187DmLM0kSe70XaOYHxihyLL&#43;Ztugn7T3HyysRRXC0L4VFgjAjQA7wtMTH4KkIW7vPshY8R6O7ciVopH&#43;a6y3GlBpsOsT1OZiaDZ/ftkmSMN8OQt1CoFYlBAm2u03JKw&#43;vvODxpRmlfQHITZ1l8EP6xp47zU5h8or3bfNq5RTQOg74PRNtIHvv/wKcRgsLdzoabV4lH2QoT3lsSUDA7H284R0FlHPtSCLPQ&#43;3khWQwVAFFn4EQCoAvS7YXR9RbexQI6fDzQqmeNbI9&#43;OIdurP4afWvxj4qGn0cqFIwqAofNA/sh3numNAzEYxxoGKrLx87N4tIxk1x7&#43;wwCMDj2JBXsPA6InAQpq9g/b9mNLEs0TEfrqT4ug0JAEdOH87GwRp&#43;nsMHVWjYx0pXU5BUN&#43;hgp9Avr07sOPBgBAH4QOe1HeqUM2gKWqH985SABQzv9V1rPucSlb&#43;Qo6UdBfc1JeAKIInGCRtRkgArBFJ7sPMqHKnLgNxLNZR6tmwpSIAJpXZdI6fzX42&#43;nR336EaVl&#43;hQDh/CgwagrbBE93MXUkKWXZQ94EEHLP&#43;Ps&#43;CzOUlFuJl&#43;hC18N2auTUXHoAHHGtyuC6AWp1fHq6gaLeDFebobQRQFFfI9s1Fa51J4CXdI8AHDGljXD&#43;9JNuwDxSNm6/CYTH4gkBmE1mDPt8UZ3kusssbb8JyJlEhwDMDvfJb3&#43;nRxiIxeTFi2kAwMngYjEZpTKYu45YVuWrqiOGBVcBEda3mFMztAqAhhIWQIes6CgNhAXQIV52/xIN1&#43;E8KOwdAtfBxmRXldcRrQu5DkMBYiXy/j9zgpfw99TrGQAAAABJRU5ErkJggg==" alt="Al Fouad Pharmacies">
+  <div class="tag"><b>AL FOUAD</b> CLIENT BRIEF</div>
+</div></header>
+
+<nav class="progress" id="progress" hidden><div class="wrap">
+  <ol class="steps" id="steps"></ol>
+  <div class="count" id="count"></div>
+</div></nav>
+
+<main><div class="wrap" id="view"></div></main>
+
+<div id="printdoc" aria-hidden="true"></div>
+
+<footer><div class="wrap"><span>AL FOUAD PHARMACIES</span><span id="foot"></span></div></footer>
+
+<script>
+
+
+const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbzXR1h491FIl6J89c1iktrmIme-jxiAVJoe_2bkhrLMw78U0zXOzjAegfIB5zrRSvue/exec';
+
+const REQUIRED = ['s01.q1.2','s01.q1.3','s01.q2.1']; 
+
+const SECTIONS = [
+  { n:'01', title:'BUSINESS AND GOALS',
+    intro:'Describe your business and what you want advertising to achieve. Enter past advertising results in section 5, and your available budget and dates in section 6. For any field, you may write ‘unknown’ or ‘not applicable’. Label estimates clearly.',
+    rows:[
+      ['Who is completing this document, and when was the information last updated?',['Information current as of','Name and role','Contact']],
+      ['What does your business do? Briefly explain what you sell and who buys it.',['Business name','Industry','Business description']],
+      ['Where can we find your business and its offers?',['Website','Social accounts','Catalogue or presentation']],
+      ['Which markets do you serve? Separate where you can sell from where you want to advertise.',['Sales or service locations','Desired advertising locations','Customer and advertising languages']],
+      ['What is the main problem today? For example: too few inquiries, expensive or poor-quality leads, too few sales, unprofitable ads, no budget, or a first launch.',['Main problem','What is happening','What you have tried']],
+      ['What business result should advertising deliver: purchases, qualified inquiries, bookings, new customers, or something else?',['Main result','What success would look like','Priority product or service']],
+      ['Do you have a target number of results or a desired cost per result? Both are optional. Explain whether each is a preference, a firm requirement, or based on past results. If you need a recommendation, say so.',['Target quantity and period','Why this target','Desired cost, currency and result type','Basis for the desired cost']],
+    ]},
+  { n:'02', title:'PRODUCT OR PLAN',
+    intro:'Complete a separate copy of this section for each priority product, service or pricing plan. One offer needs one copy. Use the same offer names throughout the document.',
+    rows:[
+      ['Which offer do you want to advertise, and why is it a priority?',['Offer name','Priority and reason','Offer link']],
+      ['What is the product or service? What customer problem does it solve, and what does the customer get from it?',['Description','Customer problem','Customer outcome']],
+      ['What is included or excluded? How does the customer receive the product or service?',['Included','Excluded or charged separately','Delivery, stages and timing']],
+      ['How much does the customer pay? Give the selling price, not your cost. For custom pricing, use a starting price or state that a quote is required.',['Price and currency','Payment unit','Average order value, if different']],
+      ['What is your unique selling proposition? List specific benefits and differences from alternatives. Which can you support with evidence?',['Benefits and differences','Evidence or links']],
+      ['Do you offer discounts, bonuses, promotions or instalment payments? Write ‘none’ if you do not.',['Offer','Regular and promotional prices','Dates, conditions and extra charges']],
+      ['What purchase, return and guarantee terms apply? For subscriptions or trials, include renewal and charging terms.',['Purchase terms','Returns and guarantees','Subscription or trial terms']],
+      ['Who is the offer unsuitable for, and what are its limitations? What must the ads never promise?',['Drawbacks and limitations','Unsuitable customers','Claims that must not be made']],
+    ]},
+  { n:'03', title:'BUYERS AND COMPETITORS', intro:'A short description is enough.',
+    rows:[['Who usually buys from you?',['Current customers']],['Who would you like to attract?',['Desired customers']],['Who are your main competitors?',['Names and links']]]},
+  { n:'04', title:'PATH TO PURCHASE',
+    rows:[
+      ['Where should people go after clicking an ad? If already chosen, give the exact page, account or contact route.',['Offer','Destination type','Exact link or contact']],
+      ['Do you have a customer database? Describe its contents and approximate size; do not include customers’ personal data.',['Information held','Approximate customers or leads','Where it is stored']],
+    ]},
+  { n:'05', title:'PAST ADS AND RESULTS',
+    intro:'Use one entry per campaign. If you have never advertised, write “Never” and move to section 6.',
+    rows:[
+      ['Which advertising campaign or period are you describing?',['Advertising status','Offer and platform','Campaign start and end dates','Advertising locations']],
+      ['What was the goal, and where did people go after clicking?',['Goal','Destination','What counted as a result']],
+      ['How much did you spend, and how many impressions and clicks did you receive during those campaign dates?',['Advertising spend and currency','Impressions','Clicks and click type']],
+      ['How many inquiries and qualified leads came from this campaign? If known, explain how duplicates and spam were counted.',['Total leads','Qualified leads','Counting rules']],
+    ]},
+  { n:'06', title:'BUDGET AND TIMING', intro:'Estimates are fine. Write “Unknown” where needed.',
+    rows:[['What is your advertising budget?',['Amount, currency and period']],['How much is left from each sale before advertising?',['Product and amount, or Unknown']],['When should the ads run?',['Start and end dates']]]},
+  { n:'07', title:'PRODUCT PHOTOS',
+    rows:[['Add your product photos or a folder link.',['Photos or folder link']]]},
+  { n:'08', title:'LAUNCH READINESS',
+    rows:[
+      ['Do you have a Meta ad account?',[{label:'Meta ad account',choices:['Yes','No','Not sure']}]],
+      ['Is your website or order page ready?',[{label:'Website or order page ready',choices:['Yes','No','Not applicable']}]],
+      ['Who will approve the ads and launch?',['Name and contact']],
+    ]},
+];
+const CLOSING = 'This brief informs the plan. The specific ads, spending limit and launch are reviewed separately.';
+
+
+const AR = {
+ "att_en": "Attachment / link / folder",
+ "att_ar": "مرفق / لينك / فولدر",
+ "sections": [
+  {
+   "title": "البيزنس والأهداف",
+   "intro": "احكيلنا عن البيزنس بتاعك وعايز الإعلانات توصّلك لإيه. نتايج الإعلانات اللي فاتت اكتبها في قسم ٥، والميزانية والمواعيد في قسم ٦. في أي خانة ممكن تكتب «مش معروف» أو «مش منطبق»، ولو الرقم تقريبي وضّح إنه تقريبي.",
+   "q": [
+    "مين اللي بيملا الملف ده، وإمتى آخر مرة المعلومات اتحدّثت؟",
+    "البيزنس بتاعك بيعمل إيه؟ قولّنا باختصار بتبيع إيه ومين اللي بيشتري.",
+    "نلاقي البيزنس بتاعك وعروضه فين؟",
+    "بتخدم أنهي أسواق؟ افصل بين الأماكن اللي بتبيع فيها والأماكن اللي عايز تعلن فيها.",
+    "إيه المشكلة الأساسية دلوقتي؟ مثلاً: استفسارات قليلة، عملاء محتملين غاليين أو مش مناسبين، مبيعات قليلة، إعلانات مش جايبة مكسب، مفيش ميزانية، أو أول مرة تعلن.",
+    "عايز الإعلانات تجيبلك نتيجة إيه: مبيعات، استفسارات جادة، حجوزات، عملاء جداد، ولا حاجة تانية؟",
+    "عندك رقم مستهدف للنتايج أو تكلفة معينة عايزها لكل نتيجة؟ الاتنين اختياري. وضّح كل واحد فيهم: تفضيل، ولا شرط لازم، ولا مبني على نتايج قبل كده. ولو محتاج نقترح عليك، قول."
+   ]
+  },
+  {
+   "title": "المنتج أو الباقة",
+   "intro": "املا نسخة منفصلة من القسم ده لكل منتج أو خدمة أو باقة أسعار مهمة؛ كل عرض ليه نسخة. واستخدم نفس أسماء العروض في الملف كله.",
+   "q": [
+    "أنهي عرض عايز تعلن عنه، وليه هو الأهم دلوقتي؟",
+    "المنتج أو الخدمة إيه؟ بيحل مشكلة إيه عند العميل، والعميل بياخد إيه في الآخر؟",
+    "إيه اللي داخل في العرض وإيه اللي مش داخل؟ والعميل بيستلم المنتج أو الخدمة إزاي؟",
+    "العميل بيدفع كام؟ اكتب سعر البيع مش التكلفة عليك. لو السعر بيختلف حسب الطلب، اكتب «يبدأ من» أو قول إنه محتاج عرض سعر.",
+    "إيه اللي بيميّزك؟ اكتب المميزات والفرق بينك وبين البدايل، وأنهي حاجة منهم تقدر تثبتها.",
+    "عندك خصومات أو هدايا أو عروض أو تقسيط؟ لو مفيش اكتب «مفيش».",
+    "إيه شروط الشراء والاسترجاع والضمان؟ لو فيه اشتراك أو فترة تجربة، اكتب شروط التجديد والدفع.",
+    "العرض ده مش مناسب لمين، وإيه حدوده؟ وإيه اللي الإعلانات ممنوع توعد بيه خالص؟"
+   ]
+  },
+  {
+   "title": "العملاء والمنافسين",
+   "intro": "وصف قصير كفاية.",
+   "q": [
+    "مين اللي بيشتري منك عادةً؟",
+    "مين اللي نفسك توصله؟",
+    "مين أهم المنافسين بتوعك؟"
+   ]
+  },
+  {
+   "title": "طريق الشراء",
+   "intro": "",
+   "q": [
+    "الناس تروح فين بعد ما تدوس على الإعلان؟ لو محدد خلاص، اكتب الصفحة أو الأكونت أو وسيلة التواصل بالظبط.",
+    "عندك داتا للعملاء؟ قولّنا فيها إيه وحجمها تقريباً، ومتكتبش بيانات العملاء الشخصية."
+   ]
+  },
+  {
+   "title": "الإعلانات اللي فاتت ونتايجها",
+   "intro": "اكتب كل حملة لوحدها. لو عمرك ما عملت إعلانات، اكتب «أبداً» وروح على قسم ٦.",
+   "q": [
+    "بتتكلم عن أنهي حملة أو فترة؟",
+    "كان الهدف إيه، والناس كانت بتروح فين بعد ما تدوس؟",
+    "صرفت كام، وجالك كام ظهور وكام كليك في فترة الحملة دي؟",
+    "جالك كام استفسار وكام عميل جاد من الحملة دي؟ لو تعرف، قولّنا كنت بتحسب المكرر والسبام إزاي."
+   ]
+  },
+  {
+   "title": "الميزانية والمواعيد",
+   "intro": "الأرقام التقريبية تمام. اكتب «مش معروف» لو مش متأكد.",
+   "q": [
+    "ميزانية الإعلانات بتاعتك كام؟",
+    "بيفضل معاك كام من كل بيعة قبل مصاريف الإعلانات؟",
+    "عايز الإعلانات تشتغل إمتى؟"
+   ]
+  },
+  {
+   "title": "صور المنتجات",
+   "intro": "",
+   "q": [
+    "حط صور المنتجات أو لينك فولدر فيه الصور."
+   ]
+  },
+  {
+   "title": "جاهزية الإطلاق",
+   "intro": "",
+   "q": [
+    "عندك أكونت إعلانات على ميتا؟",
+    "الموقع أو صفحة الطلب جاهزين؟",
+    "مين اللي هيوافق على الإعلانات والإطلاق؟"
+   ]
+  }
+ ],
+ "labels": {
+  "Information current as of": "المعلومات محدّثة لحد إمتى",
+  "Name and role": "الاسم والوظيفة",
+  "Contact": "وسيلة التواصل",
+  "Business name": "اسم البيزنس",
+  "Industry": "المجال",
+  "Business description": "وصف البيزنس",
+  "Website": "الموقع",
+  "Social accounts": "أكونتات السوشيال",
+  "Catalogue or presentation": "كتالوج أو بريزنتيشن",
+  "Sales or service locations": "أماكن البيع أو الخدمة",
+  "Desired advertising locations": "الأماكن اللي عايز تعلن فيها",
+  "Customer and advertising languages": "لغة العملاء ولغة الإعلانات",
+  "Main problem": "المشكلة الأساسية",
+  "What is happening": "إيه اللي بيحصل",
+  "What you have tried": "جربت إيه قبل كده",
+  "Main result": "النتيجة الأساسية",
+  "What success would look like": "النجاح بالنسبالك شكله إيه",
+  "Priority product or service": "المنتج أو الخدمة الأهم",
+  "Target quantity and period": "العدد المستهدف والمدة",
+  "Why this target": "ليه الرقم ده",
+  "Desired cost, currency and result type": "التكلفة اللي عايزها والعملة ونوع النتيجة",
+  "Basis for the desired cost": "التكلفة دي مبنية على إيه",
+  "Offer name": "اسم العرض",
+  "Priority and reason": "الأولوية والسبب",
+  "Offer link": "لينك العرض",
+  "Description": "الوصف",
+  "Customer problem": "مشكلة العميل",
+  "Customer outcome": "العميل هيستفيد إيه",
+  "Included": "إيه اللي داخل",
+  "Excluded or charged separately": "إيه اللي مش داخل أو بفلوس زيادة",
+  "Delivery, stages and timing": "التسليم والمراحل والمواعيد",
+  "Price and currency": "السعر والعملة",
+  "Payment unit": "الدفع على إيه (قطعة، شهر، جلسة…)",
+  "Average order value, if different": "متوسط قيمة الطلب لو مختلف",
+  "Benefits and differences": "المميزات والاختلافات",
+  "Evidence or links": "إثباتات أو لينكات",
+  "Offer": "العرض",
+  "Regular and promotional prices": "السعر العادي وسعر العرض",
+  "Dates, conditions and extra charges": "المواعيد والشروط والمصاريف الزيادة",
+  "Purchase terms": "شروط الشراء",
+  "Returns and guarantees": "الاسترجاع والضمان",
+  "Subscription or trial terms": "شروط الاشتراك أو فترة التجربة",
+  "Drawbacks and limitations": "العيوب والحدود",
+  "Unsuitable customers": "العملاء اللي مش مناسبين",
+  "Claims that must not be made": "كلام ممنوع يتقال في الإعلانات",
+  "Current customers": "العملاء الحاليين",
+  "Desired customers": "العملاء اللي عايزهم",
+  "Names and links": "الأسماء واللينكات",
+  "Destination type": "نوع المكان (موقع، واتساب، صفحة…)",
+  "Exact link or contact": "اللينك أو وسيلة التواصل بالظبط",
+  "Information held": "البيانات اللي عندك",
+  "Approximate customers or leads": "عدد العملاء أو المهتمين تقريباً",
+  "Where it is stored": "متسجلة فين",
+  "Advertising status": "حالة الإعلانات",
+  "Offer and platform": "العرض والمنصة",
+  "Campaign start and end dates": "تاريخ بداية ونهاية الحملة",
+  "Advertising locations": "أماكن الإعلان",
+  "Goal": "الهدف",
+  "Destination": "الناس كانت بتروح فين",
+  "What counted as a result": "إيه اللي كان بيتحسب نتيجة",
+  "Advertising spend and currency": "المصروف على الإعلانات والعملة",
+  "Impressions": "عدد مرات الظهور",
+  "Clicks and click type": "عدد الكليكات ونوعها",
+  "Total leads": "إجمالي المهتمين",
+  "Qualified leads": "المهتمين الجادين",
+  "Counting rules": "كنت بتحسبهم إزاي",
+  "Amount, currency and period": "المبلغ والعملة والمدة",
+  "Product and amount, or Unknown": "المنتج والمبلغ، أو «مش معروف»",
+  "Start and end dates": "تاريخ البداية والنهاية",
+  "Photos or folder link": "الصور أو لينك الفولدر",
+  "Yes / No / Not sure": "أيوه / لأ / مش متأكد",
+  "Yes / No / Not applicable": "أيوه / لأ / مش منطبق",
+  "Name and contact": "الاسم ووسيلة التواصل",
+  "Meta ad account": "أكونت إعلانات ميتا",
+  "Website or order page ready": "الموقع أو صفحة الطلب جاهزين",
+  "Yes": "أيوه",
+  "No": "لأ",
+  "Not sure": "مش متأكد",
+  "Not applicable": "مش منطبق"
+ }
+};
+const ATT_EN = AR.att_en, ATT_AR = AR.att_ar;
+const MAX_FILE = 10*1024*1024, MAX_TOTAL = 25*1024*1024;
+const FILES = {}; 
+SECTIONS.forEach((s,si)=>{ const a=AR.sections[si]; s.ar=a.title; s.arIntro=a.intro;
+  s.rows.forEach((r,ri)=>{ r[2]=a.q[ri];
+    r[1]=r[1].map((f,fi)=>{ const o=typeof f==='string'?{label:f}:f; o.key=`s${s.n}.q${ri+1}.${fi+1}`; return o; });
+    r[1].push({label:ATT_EN, att:true, key:`s${s.n}.q${ri+1}.att`});
+  }); });
+const fmtSize=b=>b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
+const totalSize=()=>Object.values(FILES).flat().reduce((a,f)=>a+f.size,0);
+let fileErr={};
+
+const DRAFT_KEY='alfouad-brief-draft';
+let data={}; try{ data=JSON.parse(localStorage.getItem(DRAFT_KEY)||'{}') }catch(e){}
+let step=0; 
+let missing=[]; let errMsg=''; let sending=false;
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function saveDraft(){ try{ localStorage.setItem(DRAFT_KEY,JSON.stringify(data)); }catch(e){} const s=$('#saved'); if(s) s.textContent='Draft saved on this device'; }
+
+function renderSteps(){
+  $('#progress').hidden = step===0||step===9;
+  $('#steps').innerHTML = SECTIONS.map((s,i)=>`<li class="${i+1<step?'done':i+1===step?'cur':''}"><button type="button" data-go="${i+1}" aria-label="Section ${s.n}: ${s.title}"><span class="bar"></span><span class="lbl"><span>${s.n}</span>${s.title}</span></button></li>`).join('');
+  $('#count').textContent = step&&step<9 ? `Section ${step} of 8 · ${SECTIONS[step-1].title}` : '';
+  $('#foot').textContent = step&&step<9 ? `${step} / 8` : '';
+}
+
+function fieldHTML(f){
+  const v=data[f.key]||'';
+  if(f.att){ const list=FILES[f.key]||[];
+    return `<div class="f att"><label for="${f.key}"><span>${esc(ATT_EN)}</span><span class="ar">${esc(ATT_AR)}</span></label>
+      <div class="attrow"><input type="text" id="${f.key}" name="${f.key}" dir="auto" value="${esc(v)}" placeholder="Paste a link (Google Drive, Dropbox, website…)">
+      <label class="up">Upload files<input type="file" multiple data-files="${f.key}" aria-label="Upload files for this question"></label></div>
+      ${list.length?`<ul class="files">${list.map((x,i)=>`<li><span>${esc(x.name)} · ${fmtSize(x.size)}</span><button type="button" data-rm="${f.key}|${i}">Remove</button></li>`).join('')}</ul>`:''}
+      ${fileErr[f.key]?`<p class="ferr" role="alert">${esc(fileErr[f.key])}</p>`:''}
+      ${list.length?`<p class="fhint">Files are sent when you submit. They are not kept if you close this page.</p>`:''}</div>`;
+  }
+  const la=AR.labels[f.label]||'';
+  if(f.choices) return `<div class="f"><label class="bil"><span>${esc(f.label)}</span><span class="ar">${esc(la)}</span></label><div class="chips" role="radiogroup">${f.choices.map((c,i)=>`<input type="radio" name="${f.key}" id="${f.key}-${i}" value="${esc(c)}" ${v===c?'checked':''}><label for="${f.key}-${i}">${esc(c)} · <span class="ar" style="display:inline;color:inherit">${esc(AR.labels[c]||'')}</span></label>`).join('')}</div></div>`;
+  const req=REQUIRED.includes(f.key);
+  return `<div class="f${req&&missing.includes(f.key)?' missing':''}"><label class="bil" for="${f.key}"><span>${esc(f.label)}${req?' <span class="req">*</span>':''}</span><span class="ar">${esc(la)}</span></label><textarea id="${f.key}" name="${f.key}" rows="1" dir="auto"${req?' required':''}>${esc(v)}</textarea></div>`;
+}
+
+function render(){
+  renderSteps();
+  const v=$('#view');
+  if(step===9){
+    v.innerHTML=`<div class="thanks">
+      <p class="eyebrow">Brief received</p>
+      <h2>Thank you${data['s01.q2.1']?', '+esc(data['s01.q2.1']):''}.</h2>
+      <p class="lead" style="margin:0">Your answers reached the Al Fouad team. We will review them and get back to you with the next steps.</p>
+      <div class="btns"><button class="btn primary" type="button" id="pdf">Save a PDF copy</button><button class="btn" type="button" id="again">Start a new brief</button></div>
+    </div>`;
+    return;
+  }
+  if(step===0){
+    v.innerHTML=`
+      <p class="eyebrow">Your business at a glance</p>
+      <h1><span class="r">AL FOUAD</span><br>CLIENT BRIEF</h1>
+      <div class="rule"></div>
+      <p class="lead">Complete your business details once for audience research, ad creation and launch planning.</p>
+      <ol class="index">${SECTIONS.map(s=>`<li><div><span>${s.n}</span>${s.title}</div><b class="ar">${esc(s.ar)}</b></li>`).join('')}</ol>
+      <div class="how"><p class="eyebrow">How to use this form</p>
+        <p>Answer each section, then submit. Use “Unknown” or “Not applicable” where needed, and label estimates.</p>
+        <p>Under each question you can paste a link or upload files (up to 10 MB each, 25 MB in total).</p>
+        <p>Your written answers are saved on this device as you type, so you can come back later.</p></div>
+      <div class="nav"><span></span><button class="btn primary" type="button" data-go="1">Start the brief</button></div>`;
+  } else {
+    const s=SECTIONS[step-1];
+    v.innerHTML=`
+      <p class="eyebrow">Section ${s.n} <i>/ Business brief</i></p>
+      <h2>${s.title}</h2>
+      <p class="ar h2ar">${esc(s.ar)}</p>
+      ${s.intro?`<p class="lead">${esc(s.intro)}</p><p class="lead ar">${esc(s.arIntro)}</p>`:'<div style="height:12px"></div>'}
+      <div class="card">
+        <div class="thead"><div>BUSINESS INPUT</div><div>YOUR DETAILS</div></div>
+        ${s.rows.map(([q,fs,qa])=>`<div class="q"><div class="ask">${esc(q)}<p class="ar">${esc(qa)}</p></div><div class="ans">${fs.map(fieldHTML).join('')}</div></div>`).join('')}
+      </div>
+      ${step===8?`<p class="note">${CLOSING}</p><div class="hp" aria-hidden="true"><label for="website_hp">Leave empty</label><input id="website_hp" name="_hp" tabindex="-1" autocomplete="off"></div>`:''}
+      ${errMsg&&step===8?`<div class="err" role="alert">${errMsg}</div>`:''}
+      <div class="nav">
+        <button class="btn" type="button" data-go="${step-1}">Back</button>
+        <span class="saved" id="saved"></span>
+        ${step<8?`<button class="btn primary" type="button" data-go="${step+1}">Next: ${SECTIONS[step].title.toLowerCase().replace(/^./,c=>c.toUpperCase())}</button>`
+                 :`<span style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn" type="button" id="pdf">Save a PDF copy</button><button class="btn primary" type="button" id="submit"${sending?' disabled':''}>${sending?(totalSize()?'Uploading files…':'Sending…'):'Submit brief'}</button></span>`}
+      </div>`;
+    v.querySelectorAll('textarea').forEach(grow);
+  }
+}
+function grow(t){ t.style.height='auto'; t.style.height=(t.scrollHeight+3)+'px'; }
+
+document.addEventListener('input',e=>{
+  const t=e.target; if(t.type==='file') return; if(!t.name||t.name==='_hp') return;
+  data[t.name]=t.value; if(t.tagName==='TEXTAREA') grow(t); saveDraft();
+});
+document.addEventListener('change',e=>{
+  const t=e.target; if(t.type!=='file') return;
+  const key=t.dataset.files, list=FILES[key]||(FILES[key]=[]); fileErr[key]='';
+  for(const f of t.files){
+    if(f.size>MAX_FILE){ fileErr[key]=`${f.name} is larger than 10 MB. Share it as a link instead.`; continue; }
+    if(totalSize()+f.size>MAX_TOTAL){ fileErr[key]=`Total uploads would pass 25 MB. Share ${f.name} as a link instead.`; continue; }
+    list.push(f);
+  }
+  const y=window.scrollY; render(); window.scrollTo(0,y);
+});
+document.addEventListener('click',e=>{
+  const rm=e.target.closest('[data-rm]');
+  if(rm){ const [k,i]=rm.dataset.rm.split('|'); FILES[k].splice(+i,1); fileErr[k]=''; const y=window.scrollY; render(); window.scrollTo(0,y); return; }
+  if(e.target.closest('#pdf')){ buildPrint(); window.print(); return; }
+  if(e.target.closest('#submit')){ submit(); return; }
+  if(e.target.closest('#again')){ data={}; for(const k in FILES) delete FILES[k]; try{localStorage.removeItem(DRAFT_KEY)}catch(_){} step=0; render(); return; }
+  const g=e.target.closest('[data-go]'); if(!g) return;
+  step=+g.dataset.go; render(); window.scrollTo({top:0,behavior:'smooth'});
+});
+
+function allFields(){ const out=[]; SECTIONS.forEach(s=>s.rows.forEach(([q,fs],ri)=>fs.forEach(f=>out.push({key:f.key,section:s.n+' '+s.title,question:q,
+  label:f.att?`Q${ri+1} · ${ATT_EN}`:f.label,labelAr:f.att?ATT_AR:(AR.labels[f.label]||''),questionAr:s.rows[ri][2],value:(data[f.key]||'').trim(),files:f.att?(FILES[f.key]||[]).map(x=>x.name):undefined})))); return out; }
+const readB64=f=>new Promise((ok,no)=>{ const r=new FileReader(); r.onload=()=>ok(String(r.result).split(',')[1]); r.onerror=()=>no(r.error); r.readAsDataURL(f); });
+
+function buildPrint(){
+  const logo=document.querySelector('.top img').src;
+  const when=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  document.getElementById('printdoc').innerHTML=`
+    <div class="pd-head"><img src="${logo}" alt=""><div class="tag"><b>AL FOUAD</b> CLIENT BRIEF</div></div>
+    <p class="pd-meta">${esc(data['s01.q2.1']||'')}${data['s01.q2.1']?' · ':''}Prepared ${when}</p>
+    ${SECTIONS.map(s=>`<div class="pd-sec"><p class="eyebrow">Section ${s.n} <i>/ Business brief</i></p><h3>${s.title}</h3><p class="ar h2ar">${esc(s.ar)}</p>
+      ${s.rows.map(([q,fs,qa])=>`<div class="pd-row"><div class="ask">${esc(q)}<p class="ar">${esc(qa)}</p></div><div class="ans">${fs.map(f=>{let v=(data[f.key]||'').trim(); if(f.att){ const n=(FILES[f.key]||[]).map(x=>x.name).join(', '); if(n) v=(v?v+'\n':'')+'Files: '+n; if(!v) return ''; } return `<div class="pd-f"><div class="l">${esc(f.label)} <span class="ar" style="display:inline">${esc(f.att?ATT_AR:(AR.labels[f.label]||''))}</span></div><div class="v${v?'':' empty'}" dir="auto">${v?esc(v):'—'}</div></div>`}).join('')}</div></div>`).join('')}</div>`).join('')}
+    <p class="pd-close">${CLOSING}</p>`;
+}
+
+async function submit(){
+  if(sending) return;
+  missing=REQUIRED.filter(k=>!(data[k]||'').trim());
+  if(missing.length){
+    errMsg=''; step=1; render(); window.scrollTo({top:0});
+    const first=document.getElementById(missing[0]); if(first){ first.focus(); first.scrollIntoView({block:'center'}); }
+    return;
+  }
+  if((document.getElementById('website_hp')||{}).value){ step=9; render(); return; } // spam bot
+  const GAS = window.google && google.script && google.script.run;
+  if(!GAS && (!SUBMIT_URL || SUBMIT_URL.indexOf('PASTE')===0)){ errMsg='This form is not connected yet. Please contact the Al Fouad team.'; render(); return; }
+  sending=true; errMsg=''; render();
+  try{
+    const files=[]; for(const [key,list] of Object.entries(FILES)) for(const f of list) files.push({key,name:f.name,mimeType:f.type||'application/octet-stream',data:await readB64(f)});
+    const payload={ submittedAt:new Date().toISOString(), businessName:data['s01.q2.1']||'', fields:allFields(), files };
+    if(GAS){
+      await new Promise((ok,no)=>google.script.run
+        .withSuccessHandler(r=> r&&r.ok ? ok() : no(new Error((r&&r.error)||'Not saved')))
+        .withFailureHandler(no).submitBrief(payload));
+    } else {
+      await fetch(SUBMIT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    }
+    sending=false; try{localStorage.removeItem(DRAFT_KEY)}catch(_){} for(const k in FILES) delete FILES[k];
+    step=9; render(); window.scrollTo({top:0});
+  }catch(err){
+    sending=false; errMsg='We could not send your brief. Check your internet connection and press Submit again. Your answers are still saved on this device.'; render();
+  }
+}
+window.addEventListener('beforeprint',buildPrint);
+render();
+</script>
+</body>
+</html>
